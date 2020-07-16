@@ -12,15 +12,11 @@ const ContainerBox = styled.div`
 `;
 
 // API 호출 함수
-function getPosts() {
-  // id, title, content 가지는 컬렉션 만들기
-  let posts = [];
-  for (let i = 1; i < 6; i++)
-    posts[i] = {
-      id: i,
-      title: `제목 ${i}`,
-      content: '내용 ' + i,
-    };
+// 비동기 함수 await 는 async 와 같이 써야함
+async function getPosts() {
+  let response = await fetch('http://localhost:8080/post');
+  let posts = await response.json();
+  console.log(posts);
   return posts;
 }
 

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="data-box">안녕</div>
+    <button onclick="getPosts()">클릭하세요</button>
+    <script>
+      async function getPosts() {
+        // let resp = fetch('http://localhost:8080/post');
+        // console.log(resp); // pending 데이터 : 다운을 받기 전의 데이터가 들어옴
+        // ▼ ▼ ▼ ▼ ▼
+        // await는 비동기, function 앞에 async 붙임
+        let resp = await fetch('http://localhost:8080/post');
+        let posts = await resp.json(); // 자바스크립트 Object
+        let dataBox = document.querySelector('#data-box');
+        // dataBox.innerHTML = posts[0].title;
+        dataBox.innerHTML = JSON.stringify(posts); // 자바스크립트 Object → json 데이터로 변환
+        console.log(posts);
+      }
+    </script>
+  </body>
+</html>
