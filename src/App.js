@@ -1,40 +1,41 @@
-// 메인 파일은 클래스형 Components로 만든다.
-// 나머지 파일들은 function Components
-
 import React, { Component } from 'react';
+import styled from 'styled-components';
+import Post from './Post';
+
+const ContainerBox = styled.div`
+  display: grid;
+  width: 900px;
+  border: 1px solid purple;
+  text-align: center;
+  /* text-align은 inline 속성을 가지고 있어야 먹힘 */
+  margin: 10px auto;
+`;
+
+// API 호출 함수
+function getPosts() {
+  // id, title, content 가지는 컬렉션 만들기
+  let posts = [];
+  for (let i = 1; i < 6; i++)
+    posts[i] = {
+      id: i,
+      title: `제목 ${i}`,
+      content: '내용 ' + i,
+    };
+  return posts;
+}
 
 class App extends Component {
-  // state - component가 갖고있는 값
-  // 키워드
-  state = {
-    name: '홍길동',
-    nickName: '야식왕',
-  };
-
-  // render : 그림을 그려주는 함수
   render() {
-    // 그림 그릴 때마다 호출되는데 연산이 많아져서 좋지 않으므로 const로 메모리에 바로 띄움
-    const btnClick = () => {
-      // this.state.nickName = '홈런왕';
-      this.setState({
-        // Object 담을 수 있음. setState 할 때만 다시 그려짐.
-        nickName: '홈런왕',
-      });
-      console.log(this.state.nickName);
-      // console창에는 바뀐 값이 뜨지만 동기화가 되지 않는다. 즉, 그림이 다시 그려지지 않는다.
-      // render()가 다시 호출되어야 그림이 그려진다.
-      // render()를 호출할 수 있는 유일한 방법
-    };
-
-    // let name = '홍길동';
-    // let nickName = '야식왕';
-
     return (
-      <div>
-        <div>나의 이름은 {this.state.name}입니다.</div>
-        <div>나의 별명은 {this.state.nickName}입니다.</div>
-        <button onClick={btnClick}>닉네임 변경</button>
-      </div>
+      <ContainerBox>
+        {/* 리턴 시 중괄호 안에 function 넘김 */}
+        {getPosts().map(
+          /* getPosts 컬렉션의 사이즈만큼 map 내부가 호출됨 */
+          (post) => (
+            <Post id={post.id} title={post.title} content={post.content} />
+          )
+        )}
+      </ContainerBox>
     );
   }
 }
